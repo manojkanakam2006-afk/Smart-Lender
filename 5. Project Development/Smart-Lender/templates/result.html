@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - Smart-Lender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🏦</span>
+                <span class="logo-text">Smart-Lender</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/predict">Predict</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="result-container">
+            <div class="result-header">
+                <h1>Prediction Result</h1>
+                <p>Here's the analysis of your loan application</p>
+            </div>
+
+            <div class="result-card {% if result.status == 'Approved' %}approved{% else %}rejected{% endif %}">
+                <div class="result-status">
+                    <span class="status-icon">
+                        {% if result.status == 'Approved' %}✅{% else %}❌{% endif %}
+                    </span>
+                    <span class="status-text">{{ result.status }}</span>
+                </div>
+                <div class="result-probability">
+                    <div class="probability-bar">
+                        <div class="probability-fill" style="width: {{ (result.probability_approved * 100) | round(1) }}%; 
+                            {% if result.status == 'Approved' %}background: #2ecc71;{% else %}background: #e74c3c;{% endif %}">
+                        </div>
+                    </div>
+                    <div class="probability-labels">
+                        <span>Approval Probability: {{ (result.probability_approved * 100) | round(1) }}%</span>
+                        <span>Rejection Probability: {{ (result.probability_rejected * 100) | round(1) }}%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-summary">
+                <h3>Application Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="label">Gender</span>
+                        <span class="value">{{ input_summary.Gender }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Married</span>
+                        <span class="value">{{ input_summary.Married }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Dependents</span>
+                        <span class="value">{{ input_summary.Dependents }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Education</span>
+                        <span class="value">{{ input_summary.Education }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Self Employed</span>
+                        <span class="value">{{ input_summary.Self_Employed }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Property Area</span>
+                        <span class="value">{{ input_summary.PropertyArea }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Applicant Income</span>
+                        <span class="value">{{ input_summary.ApplicantIncome }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Co-applicant Income</span>
+                        <span class="value">{{ input_summary.CoapplicantIncome }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Loan Amount</span>
+                        <span class="value">{{ input_summary.LoanAmount }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Loan Term</span>
+                        <span class="value">{{ input_summary.LoanTerm }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Credit History</span>
+                        <span class="value">{{ input_summary.CreditHistory }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-actions">
+                <a href="/predict" class="btn btn-primary">Make Another Prediction</a>
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Smart-Lender. All rights reserved.</p>
+    </footer>
+</body>
+</html>
